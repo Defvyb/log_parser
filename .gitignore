@@ -1,0 +1,6 @@
+build_local
+build
+build_release
+CMakeLists.txt.user
+.scannerwork
+cppcheck-report.xml
