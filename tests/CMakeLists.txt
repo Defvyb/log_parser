@@ -3,6 +3,8 @@ project(tests)
 include_directories(${GTEST_INCLUDE_DIR})
 
 add_executable(${PROJECT_NAME}
+    ../log_parser/sources/thread_pool.cpp
+    ../log_parser/sources/log_controller.cpp
     main.cpp
     tests.cpp
 )
