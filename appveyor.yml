@@ -31,7 +31,7 @@ build_script:
     - mkdir build_local
     - cd build_local
     - cmake --version
-    - cmake ..
+    - cmake -D CMAKE_C_COMPILER=gcc-9 -D CMAKE_CXX_COMPILER=g++-9 ..
     - wget https://sonarcloud.io/static/cpp/build-wrapper-linux-x86.zip
     - unzip build-wrapper-linux-x86.zip
     - cp ./build-wrapper-linux-x86/libinterceptor-x86_64.so ./build-wrapper-linux-x86/libinterceptor-haswell.so
