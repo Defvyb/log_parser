@@ -71,7 +71,7 @@ bool LogController::fillEntryByLine(std::string_view line,
     for (int i = 0; i < std::tuple_size<Props>::value; ++i)
     {
         if (options.checkJsonFormat &&
-            (d["props"].HasMember(propsNames[i].c_str()) ||
+            (!d["props"].HasMember(propsNames[i].c_str()) ||
              !d["props"][propsNames[i].c_str()].IsInt()))
         {
             return false;
