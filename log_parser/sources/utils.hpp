@@ -15,10 +15,10 @@ const T& getPrettyTime(T& buf, uint32_t timeStamp)
 {
     assert(buf.size() > 11);
     time_t rawtime = timeStamp;
-    struct tm* timeinfo;
-    localtime_r(&rawtime, timeinfo);
+    struct tm timeinfo;
+    localtime_r(&rawtime, &timeinfo);
 
-    strftime(buf.data(), buf.size(), "%Y-%m-%d", timeinfo);
+    strftime(buf.data(), buf.size(), "%Y-%m-%d", &timeinfo);
     return buf;
 }
 
