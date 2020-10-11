@@ -32,7 +32,7 @@ bool LogController::fill(std::istream& stream, const ProgramOptions& options, co
             return false;
         }
         auto& propsCount = m_log[entry.timestamp][entry.factName][entry.props];
-        if (propsCount != INT_MAX)
+        if (propsCount != std::numeric_limits<typeof(propsCount)>::max())
         {
             propsCount += 1;
         }
@@ -136,12 +136,11 @@ void LogController::mergeLogsIntoFirst(std::vector<Log>& logs)
             {
                 for (auto props : fakt.second)
                 {
-                    auto& propsCount     = firstLog[timestamp.first][fakt.first][props.first];
-                    int propsCountBefore = propsCount;
+                    auto& propsCount = firstLog[timestamp.first][fakt.first][props.first];
                     propsCount += props.second;
-                    if ((propsCount - props.second) != propsCountBefore)
+                    if (propsCount < 0)
                     {
-                        propsCount = INT_MAX;
+                        propsCount = std::numeric_limits<typeof(propsCount)>::max();
                     }
                 }
             }
