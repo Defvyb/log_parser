@@ -3,6 +3,9 @@
 #include <istream>
 #include <ostream>
 #include <vector>
+#include <optional>
+#include <atomic>
+
 
 class LogController final
 {
@@ -15,7 +18,7 @@ public:
     LogController& operator=(LogController&) = delete;
     LogController& operator=(LogController&&) = delete;
 
-    bool fill(std::istream& stream, const ProgramOptions& options);
+    bool fill(std::istream& stream, const ProgramOptions& options, std::atomic<bool> * quit = nullptr);
 
     static void mergeLogsIntoFirst(std::vector<Log>& logs);
     static void writeJson(const Log& log, std::ostream& ostream);

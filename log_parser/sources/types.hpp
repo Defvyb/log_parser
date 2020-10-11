@@ -33,7 +33,7 @@ struct Entry {
 
 struct ProgramOptions {
     bool checkJsonFormat = false;
-    int numFiles         = 1;
+    int filesCount         = 1;
     int threadsCount     = 1;
     std::string pathToFolder;
 };

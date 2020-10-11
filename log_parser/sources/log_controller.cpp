@@ -16,20 +16,28 @@ LogController::LogController(Log& log) :
         m_log(log) {}
 LogController::~LogController() {}
 
-bool LogController::fill(std::istream& stream, const ProgramOptions& options)
+bool LogController::fill(std::istream& stream, const ProgramOptions& options,  std::atomic<bool> * quit)
 {
     std::array<char, 1024> line;
     while (stream.getline(line.data(), line.size()))
     {
+        if(quit && *quit)
+        {
+            return false;
+        }
+
         Entry entry;
         if (!fillEntryByLine(line.data(), entry, options))
         {
-            std::cerr << "bad line: " << line.data() << std::endl;
-            return -1;
+            return false;
         }
-
-        m_log[entry.timestamp][entry.factName][entry.props] += 1;
+        auto & propsCount = m_log[entry.timestamp][entry.factName][entry.props];
+        if(propsCount != INT_MAX)
+        {
+             propsCount += 1;
+        }
     }
+    return true;
 }
 
 bool LogController::fillEntryByLine(std::string_view line,
@@ -130,7 +138,13 @@ void LogController::mergeLogsIntoFirst(std::vector<Log>& logs)
             {
                 for (auto props : fakt.second)
                 {
-                    firstLog[timestamp.first][fakt.first][props.first] += props.second;
+                    auto & propsCount = firstLog[timestamp.first][fakt.first][props.first];
+                    int propsCountBefore = propsCount;
+                    propsCount += props.second;
+                    if((propsCount - props.second) != propsCountBefore)
+                    {
+                        propsCount = INT_MAX;
+                    }
                 }
             }
         }

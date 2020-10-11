@@ -9,6 +9,7 @@
 #include <iostream>
 #include <unordered_map>
 
+
 template<typename T>
 const T& getPrettyTime(T& buf, uint32_t timeStamp)
 {
@@ -49,7 +50,7 @@ inline std::optional<ProgramOptions> getProgramOptions(int argc, char* argv[]) n
         findResult = arg.find("-n");
         if (findResult != std::string::npos)
         {
-            options.numFiles = std::atoi(arg.substr(arg.find_first_of("=") + 1).c_str());
+            options.filesCount = std::atoi(arg.substr(arg.find_first_of("=") + 1).c_str());
         }
 
         findResult = arg.find("-t");
@@ -64,10 +65,24 @@ inline std::optional<ProgramOptions> getProgramOptions(int argc, char* argv[]) n
             options.pathToFolder = arg.substr(arg.find_first_of("=") + 1);
         }
     }
-    if (options.threadsCount > options.numFiles)
+
+    if(options.filesCount <= 0)
     {
-        options.threadsCount = options.numFiles;
-        std::cout << "setting threads count equal to number of files " << options.threadsCount;
+        std::cerr << "files count must be greater than 0" << std::endl;
+        return std::nullopt;
     }
+
+    if(options.threadsCount <= 0)
+    {
+        std::cerr << "threads count must be greater than 0" << std::endl;
+        return std::nullopt;
+    }
+
+    if (options.threadsCount > options.filesCount)
+    {
+        options.threadsCount = options.filesCount;
+        std::cout << "setting threads count equal to files count: " << options.threadsCount << std::endl;;
+    }
+
     return options;
 }

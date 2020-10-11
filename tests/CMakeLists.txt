@@ -1,4 +1,4 @@
-project(tests)
+project(log_parser_tests)
 
 include_directories(${GTEST_INCLUDE_DIR})
 
