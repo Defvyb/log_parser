@@ -26,7 +26,7 @@ const T& getPrettyTime(T& buf, uint32_t timeStamp)
 
 inline void printHelp()
 {
-    std::cout << "Usage:  -p=~/path/to/logs path to logs, default is current dir \n";
+    std::cout << "Usage:  -p=/path/to/logs path to logs, default is current dir \n";
     std::cout << "        -n=1 files count, default is 1 \n";
     std::cout << "        -t=1 threads count, default is 1 \n";
     std::cout << "        -c json checking enabled(it can extremely slow entire process) \n";
