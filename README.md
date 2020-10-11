@@ -16,4 +16,3 @@ log_parser -p=/home/user/data/ -n=10 -t=10 -c - parse 10 files file1.log, file2.
 
 log_parser - parse 1 file1.log with 1 thread without validity checking
 ```
-L
