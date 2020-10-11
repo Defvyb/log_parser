@@ -1,4 +1,6 @@
 [![Build status](https://ci.appveyor.com/api/projects/status/gtk1anffnukikuvf?svg=true)](https://ci.appveyor.com/project/Defvyb/log-parser)
+[![Quality Gate Status](https://sonarcloud.io/api/project_badges/measure?project=fusion_core_log_parser&metric=alert_status)](https://sonarcloud.io/dashboard?id=fusion_core_log_parser)
+
 
 ```
 Usage:  
