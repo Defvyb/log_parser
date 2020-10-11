@@ -31,7 +31,7 @@ void ThreadPool::addTask(ThreadTask newTask)
 
     m_condition.notify_one();
 }
-bool ThreadPool::isEnded()
+bool ThreadPool::isEnded() const
 {
     return m_tasksInProcess == 0;
 }

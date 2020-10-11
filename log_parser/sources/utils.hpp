@@ -16,7 +16,7 @@ const T& getPrettyTime(T& buf, uint32_t timeStamp)
     assert(buf.size() > 11);
     time_t rawtime = timeStamp;
     struct tm* timeinfo;
-    timeinfo = localtime(&rawtime);
+    localtime_r(&rawtime, timeinfo);
 
     strftime(buf.data(), buf.size(), "%Y-%m-%d", timeinfo);
     return buf;
@@ -81,7 +81,7 @@ inline std::optional<ProgramOptions> getProgramOptions(int argc, char* argv[]) n
     if (options.threadsCount > options.filesCount)
     {
         options.threadsCount = options.filesCount;
-        std::cout << "setting threads count equal to files count: " << options.threadsCount << std::endl;;
+        std::cout << "setting threads count equal to files count: " << options.threadsCount << std::endl;
     }
 
     return options;

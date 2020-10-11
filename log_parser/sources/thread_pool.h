@@ -22,7 +22,7 @@ public:
 
     void addTask(ThreadTask newTask);
     void terminate();
-    bool isEnded();
+    bool isEnded() const;
 
 private:
     void loop();
@@ -30,6 +30,6 @@ private:
     std::mutex m_mutex;
     std::queue<ThreadTask> m_taskQueue;
     std::vector<std::thread> m_pool;
-    std::atomic<bool> m_terminatePool;
-    std::atomic<int> m_tasksInProcess;
+    std::atomic<bool> m_terminatePool = false;
+    std::atomic<int> m_tasksInProcess = 0;
 };

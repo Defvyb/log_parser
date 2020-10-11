@@ -16,12 +16,12 @@ LogController::LogController(Log& log) :
         m_log(log) {}
 LogController::~LogController() {}
 
-bool LogController::fill(std::istream& stream, const ProgramOptions& options,  std::atomic<bool> * quit)
+bool LogController::fill(std::istream& stream, const ProgramOptions& options, const std::atomic<bool>* quit)
 {
     std::array<char, 1024> line;
     while (stream.getline(line.data(), line.size()))
     {
-        if(quit && *quit)
+        if (quit && *quit)
         {
             return false;
         }
@@ -31,10 +31,10 @@ bool LogController::fill(std::istream& stream, const ProgramOptions& options,  s
         {
             return false;
         }
-        auto & propsCount = m_log[entry.timestamp][entry.factName][entry.props];
-        if(propsCount != INT_MAX)
+        auto& propsCount = m_log[entry.timestamp][entry.factName][entry.props];
+        if (propsCount != INT_MAX)
         {
-             propsCount += 1;
+            propsCount += 1;
         }
     }
     return true;
@@ -70,13 +70,11 @@ bool LogController::fillEntryByLine(std::string_view line,
 
     for (int i = 0; i < std::tuple_size<Props>::value; ++i)
     {
-        if (options.checkJsonFormat)
+        if (options.checkJsonFormat &&
+            (d["props"].HasMember(propsNames[i].c_str()) ||
+             !d["props"][propsNames[i].c_str()].IsInt()))
         {
-            if (!d["props"].HasMember(propsNames[i].c_str()) ||
-                !d["props"][propsNames[i].c_str()].IsInt())
-            {
-                return false;
-            }
+            return false;
         }
         entry.props[i] = d["props"][propsNames[i].c_str()].GetInt();
     }
@@ -138,10 +136,10 @@ void LogController::mergeLogsIntoFirst(std::vector<Log>& logs)
             {
                 for (auto props : fakt.second)
                 {
-                    auto & propsCount = firstLog[timestamp.first][fakt.first][props.first];
+                    auto& propsCount     = firstLog[timestamp.first][fakt.first][props.first];
                     int propsCountBefore = propsCount;
                     propsCount += props.second;
-                    if((propsCount - props.second) != propsCountBefore)
+                    if ((propsCount - props.second) != propsCountBefore)
                     {
                         propsCount = INT_MAX;
                     }

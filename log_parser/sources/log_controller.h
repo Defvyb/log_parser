@@ -18,7 +18,7 @@ public:
     LogController& operator=(LogController&) = delete;
     LogController& operator=(LogController&&) = delete;
 
-    bool fill(std::istream& stream, const ProgramOptions& options, std::atomic<bool> * quit = nullptr);
+    bool fill(std::istream& stream, const ProgramOptions& options, const std::atomic<bool> * quit = nullptr);
 
     static void mergeLogsIntoFirst(std::vector<Log>& logs);
     static void writeJson(const Log& log, std::ostream& ostream);
