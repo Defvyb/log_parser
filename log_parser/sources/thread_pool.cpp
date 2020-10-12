@@ -45,6 +45,7 @@ void ThreadPool::terminate()
     {
         if (thread.joinable()) thread.join();
     }
+    m_tasksInProcess = 0;
 }
 
 void ThreadPool::loop()
